@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://d376dob1o7btp"]
+
+[ext_resource type="Script" path="res://Scenes/player.gd" id="1_a6bv6"]
+[ext_resource type="Texture2D" uid="uid://b5b7eqj5astsk" path="res://DeathSoldierTilesheet.png" id="1_ivmxp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jg5i"]
+atlas = ExtResource("1_ivmxp")
+region = Rect2(978.5, 0, 301.5, 320)
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(555, 305)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_a6bv6")
+
+[node name="PlayerSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.204319, 0.2375)
+texture = SubResource("AtlasTexture_4jg5i")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-19, -22, -7, -32, 3, -36, 9, -35, 15, 6, 29, 9, 28, 15, 6, 16, 14, 36, -32, 38, -24, 19, -27, 3, -26, -11)
+
+[node name="LaserFirePoint" type="Marker2D" parent="."]
+position = Vector2(44, -3)
+
+[node name="LaserTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="LaserTimer" to="." method="_on_laser_timer_timeout"]

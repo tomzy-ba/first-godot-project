@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=3 uid="uid://fiigs1imvkoc"]
+
+[ext_resource type="Texture2D" uid="uid://xaer8lnma0cj" path="res://cranfield-traditional-etching-ink-mid-black.jpg" id="1_c5b1u"]
+[ext_resource type="PackedScene" uid="uid://d376dob1o7btp" path="res://Scenes/player.tscn" id="1_p8hmd"]
+[ext_resource type="Script" path="res://Scenes/level.gd" id="1_w8c3c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xpjv1"]
+size = Vector2(50, 720)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_swnk3"]
+size = Vector2(1369, 38)
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_w8c3c")
+
+[node name="BG" type="Sprite2D" parent="."]
+position = Vector2(650, 361.5)
+scale = Vector2(2.9087, 2.99606)
+texture = ExtResource("1_c5b1u")
+
+[node name="Player" parent="." instance=ExtResource("1_p8hmd")]
+position = Vector2(511, 308)
+
+[node name="Lasers" type="Node2D" parent="."]
+
+[node name="Border" type="Node2D" parent="."]
+visible = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Border"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/StaticBody2D"]
+position = Vector2(1304, 360)
+shape = SubResource("RectangleShape2D_xpjv1")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Border"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/StaticBody2D2"]
+position = Vector2(-25, 360)
+shape = SubResource("RectangleShape2D_xpjv1")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Border"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/StaticBody2D3"]
+position = Vector2(640.5, -20)
+shape = SubResource("RectangleShape2D_swnk3")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Border"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/StaticBody2D4"]
+position = Vector2(631, 742)
+shape = SubResource("RectangleShape2D_swnk3")
+
+[node name="GhostTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="Ghosts" type="Node2D" parent="."]
+
+[connection signal="laser" from="Player" to="." method="_on_player_laser"]
+[connection signal="timeout" from="GhostTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="GhostTimer" to="." method="_on_ghost_timer_timeout"]
